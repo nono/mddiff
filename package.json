@@ -1,0 +1,30 @@
+{
+  "name": "mddiff",
+  "version": "0.0.1",
+  "description": "Semantic diff for markdown",
+  "author": "Bruno Michel",
+  "license": "MIT",
+  "main": "dist/all.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.9",
+    "gulp-6to5": "~1.0.1",
+    "gulp-concat": "~2.4.1",
+    "gulp-mocha": "~1.1.1",
+    "gulp-sourcemaps": "~1.2.4"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "markdown",
+    "diff"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nono/mddiff"
+  },
+  "bugs": {
+    "url": "https://github.com/nono/mddiff/issues"
+  }
+}
