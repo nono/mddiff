@@ -6,7 +6,7 @@ var eslint = require('gulp-eslint');
 var mocha  = require('gulp-mocha');
 
 gulp.task('lint', function () {
-  return gulp.src(['bin/*', 'src/*.js', 'test/*.js'])
+  return gulp.src(['bin/*.js', 'test/*.js']) // FIXME eslint doesn't like es6 features...
     .pipe(eslint({
       env: { node: true, mocha: true },
       rules: { strict: 0 }
@@ -29,7 +29,7 @@ gulp.task('test', ['scripts'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['bin/*'], ['lint']);
+  gulp.watch(['bin/*.js'], ['lint']);
   gulp.watch(['src/*.js'], ['lint', 'scripts', 'test']);
   gulp.watch(['test/*.js'], ['lint', 'test']);
 });
