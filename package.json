@@ -18,7 +18,8 @@
     "gulp-concat": "~2.4.1",
     "gulp-mocha": "~1.1.1",
     "gulp-sourcemaps": "~1.2.4",
-    "gulp-eslint": "~0.1.8"
+    "gulp-eslint": "~0.1.8",
+    "chai": "~1.9.2"
   },
   "main": "lib/mddiff.js",
   "preferGlobal": true,
