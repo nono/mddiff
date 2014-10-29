@@ -4,26 +4,35 @@
   "description": "Semantic diff for markdown",
   "author": "Bruno Michel",
   "license": "MIT",
-  "main": "dist/all.js",
-  "dependencies": {},
+  "keywords": [
+    "markdown",
+    "commonmark",
+    "diff"
+  ],
+  "dependencies": {
+    "cmark": "git://github.com/nono/CommonMark#npmjs"
+  },
   "devDependencies": {
     "gulp": "~3.8.9",
     "gulp-6to5": "~1.0.1",
     "gulp-concat": "~2.4.1",
     "gulp-mocha": "~1.1.1",
-    "gulp-sourcemaps": "~1.2.4"
+    "gulp-sourcemaps": "~1.2.4",
+    "gulp-eslint": "~0.1.8"
+  },
+  "main": "lib/mddiff.js",
+  "preferGlobal": true,
+  "bin": {
+    "mdast": "bin/mdast"
   },
   "scripts": {
     "test": "gulp test"
   },
-  "keywords": [
-    "markdown",
-    "diff"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/nono/mddiff"
   },
+  "homepage": "https://github.com/nono/mddiff",
   "bugs": {
     "url": "https://github.com/nono/mddiff/issues"
   }
