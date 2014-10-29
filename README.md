@@ -16,14 +16,21 @@ Usage
 ### Diff between two markdown files
 
 ```
-bin/mddiff file1.md file2.md
+mddiff file1.md file2.md
 ```
 
 ### Show the abstract syntax tree of a markdown file
 
 ```
-bin/mdast file.md
-bin/mdast --dot file.md | dot -Tpng -o file.md.png
+mdast file.md
+```
+
+If you have graphviz installed, you can visualize the AST as an image:
+
+```
+mdast --dot file.md | dot -Tpng -o file.md.png
+linux $ xdg-open file.md.png
+osx $ open file.md.png
 ```
 
 Building from source

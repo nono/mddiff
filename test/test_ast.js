@@ -1,10 +1,12 @@
-var expect = require('chai').expect;
-var mddiff = require('mddiff');
+/*eslint camelcase: 0*/
 
-describe('AST', function() {
-  describe('#parseAST()', function() {
-    it('constructs an AST from a markdown string', function() {
-      var ast = mddiff.parseAST('**bold**');
+var expect = require("chai").expect;
+var mddiff = require("mddiff");
+
+describe("AST", function() {
+  describe("#parseAST()", function() {
+    it("constructs an AST from a markdown string", function() {
+      var ast = mddiff.parseAST("**bold**");
       var expected = {
         t: "Document",
         start_line: 1,

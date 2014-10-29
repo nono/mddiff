@@ -6,13 +6,16 @@ var eslint = require('gulp-eslint');
 var mocha  = require('gulp-mocha');
 
 gulp.task('lint', function () {
-  return gulp.src(['bin/*', 'src/*.es6', 'test/*.js'])
-    .pipe(eslint())
+  return gulp.src(['bin/*', 'src/*.js', 'test/*.js'])
+    .pipe(eslint({
+      env: { node: true, mocha: true },
+      rules: { strict: 0 }
+    }))
     .pipe(eslint.format());
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(['src/*.es6'])
+  return gulp.src(['src/*.js'])
     .pipe(maps.init())
     .pipe(to5())
     .pipe(concat('mddiff.js'))
@@ -20,14 +23,14 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('lib'));
 });
 
-gulp.task('test', function() {
+gulp.task('test', ['scripts'], function() {
   return gulp.src(['test/*.js'], { read: false })
     .pipe(mocha({ reporter: 'dot' }));
 });
 
 gulp.task('watch', function() {
   gulp.watch(['bin/*'], ['lint']);
-  gulp.watch(['src/*.es6'], ['lint', 'scripts', 'test']);
+  gulp.watch(['src/*.js'], ['lint', 'scripts', 'test']);
   gulp.watch(['test/*.js'], ['lint', 'test']);
 });
 
