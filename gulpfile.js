@@ -1,17 +1,19 @@
 var gulp   = require('gulp');
+var del    = require('del');
 var maps   = require('gulp-sourcemaps');
 var to5    = require('gulp-6to5');
 var concat = require('gulp-concat');
-var eslint = require('gulp-eslint');
+var jshint = require('gulp-jshint');
 var mocha  = require('gulp-mocha');
 
+gulp.task('clean', function() {
+  del(['lib/*']);
+});
+
 gulp.task('lint', function () {
-  return gulp.src(['bin/*.js', 'test/*.js']) // FIXME eslint doesn't like es6 features...
-    .pipe(eslint({
-      env: { node: true, mocha: true },
-      rules: { strict: 0 }
-    }))
-    .pipe(eslint.format());
+  return gulp.src(['gulpfile.js', 'package.json', 'bin/*.js', 'src/*.js', 'test/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('scripts', function() {
@@ -34,6 +36,6 @@ gulp.task('watch', function() {
   gulp.watch(['test/*.js'], ['lint', 'test']);
 });
 
-gulp.task('build', ['lint', 'scripts', 'test']);
+gulp.task('build', ['lint', 'clean', 'scripts', 'test']);
 
 gulp.task('default', ['watch', 'build']);

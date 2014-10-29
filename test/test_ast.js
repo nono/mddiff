@@ -1,5 +1,3 @@
-/*eslint camelcase: 0*/
-
 var expect = require("chai").expect;
 var mddiff = require("mddiff");
 

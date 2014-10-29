@@ -19,7 +19,7 @@ exports.exportDot = function(ast, filename) {
         children = children.concat(builder(item.c));
       }
       for (let child of children) {
-        out.push(`  n${ id } -> n${ child };`)
+        out.push(`  n${ id } -> n${ child };`);
       }
       ids.push(id);
     }
