@@ -6,9 +6,10 @@ var fs = require("fs");
 var util = require("util");
 var mddiff = require("mddiff");
 var argv = require("yargs")
-             .usage("Usage: $0 [--dot] filename\n\tfilename can be - for stdin")
+             .usage("Usage: $0 [--dot] [--dark] filename\n\tfilename can be - for stdin")
              .example("$0 README.md", "show the AST of the README")
              .demand(1)
+             .boolean("dark")
              .boolean("dot")
              .argv;
 
@@ -19,7 +20,8 @@ var display = function(markdown, filename) {
     return console.error("Error on processing %s: %s", filename, err);
   }
   if (argv.dot) {
-    out = mddiff.exportDot(ast, filename);
+    var palette = argv.dark ? mddiff.palettes.solarizedDark : null;
+    out = mddiff.exportDot(ast, filename, { palette: palette });
   } else {
     out = util.inspect(ast, { depth: null });
   }

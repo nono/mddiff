@@ -31,6 +31,9 @@ If you have graphviz installed, you can visualize the AST as an image:
 mdast --dot file.md | dot -Tpng -o file.md.png
 linux $ xdg-open file.md.png
 osx $ open file.md.png
+
+mdast --dark --dot file.md | dot -Tsvg -o file.md.svg
+browser file.md.svg
 ```
 
 Building from source
