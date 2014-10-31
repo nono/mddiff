@@ -1,3 +1,5 @@
+require("6to5/register");
+
 var expect = require("chai").expect;
 var mddiff = require("mddiff");
 

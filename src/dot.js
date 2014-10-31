@@ -38,15 +38,15 @@ exports.exportDot = function(ast, filename, options={}) {
   let size = options.fontsize || defaults.fontsize;
   let font = options.fontname || defaults.fontname;
 
-  var out = [`digraph "${ filename }" {`,
+  let out = [`digraph "${ filename }" {`,
              `graph [rankdir="LR", bgcolor="${pal.back}"];`,
              `node [style="filled", fontcolor="${pal.font}", fillcolor="${ pal.fill }", color="${ pal.edge }", fontsize=${ size }, fontname="${ font }"];`,
              `edge [color="${ pal.edge }"];`
             ];
-  var n = 0;
+  let n = 0;
 
   var builder = function(items, type) {
-    var ids = [];
+    let ids = [];
     for (let item of items) {
       let id = n++;
       let children = [];
@@ -64,13 +64,12 @@ exports.exportDot = function(ast, filename, options={}) {
       }
       let shape = shapes[type];
       let label = item.t;
-      if (item.t === "Str" || item.t === "Code") {
-        label = `'${ item.c }'`;
-      }
       let more = "";
       if (item.t === "Str") {
+        label = `'${ item.c }'`;
         more = `, fontcolor="${ pal.strg }"`;
-      } else if (item.t === "Code") {
+      } else if (item.t === "CodeLine" || item.t === "Code") {
+        label = item.c;
         more = `, fontcolor="${ pal.code }"`;
       } else if (item.t === "Link") {
         more = `, href="${ item.destination }"`;
