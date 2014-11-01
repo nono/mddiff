@@ -6,11 +6,12 @@ var fs = require("fs");
 var util = require("util");
 var mddiff = require("mddiff");
 var argv = require("yargs")
-             .usage("Usage: $0 [--dot] [--dark] filename\n\tfilename can be - for stdin")
+             .usage("Usage: $0 [--dot] [--dark] [-f font] [-s fontsize] filename\n\tfilename can be - for stdin")
              .example("$0 README.md", "show the AST of the README")
              .demand(1)
-             .boolean("dark")
              .boolean("dot")
+             .boolean("dark")
+             .alias("d", "dark")
              .argv;
 
 var display = function(markdown, filename) {
@@ -19,9 +20,12 @@ var display = function(markdown, filename) {
   if (err) {
     return console.error("Error on processing %s: %s", filename, err);
   }
-  if (argv.dot) {
-    var palette = argv.dark ? mddiff.palettes.solarizedDark : null;
-    out = mddiff.exportDot(ast, filename, { palette: palette });
+  if (argv.dot || argv.d) {
+    var options = {};
+    if (argv.d) { options.palette = mddiff.palettes.solarizedDark; }
+    if (argv.f) { options.fontname = argv.f; }
+    if (argv.s) { options.fontsize = argv.s; }
+    out = mddiff.exportDot(ast, filename, options);
   } else {
     out = util.inspect(ast, { depth: null });
   }

@@ -32,7 +32,7 @@ mdast --dot file.md | dot -Tpng -o file.md.png
 linux $ xdg-open file.md.png
 osx $ open file.md.png
 
-mdast --dark --dot file.md | dot -Tsvg -o file.md.svg
+mdast --dot --dark -f 'Droid sans' -s 16 file.md | dot -Tsvg -o file.md.svg
 browser file.md.svg
 ```
 
