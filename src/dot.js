@@ -74,6 +74,7 @@ exports.exportDot = function(ast, filename, options={}) {
       } else if (item.t === "Link") {
         more = `, href="${ item.destination }"`;
       }
+      label = label.replace(/["\\]/g, "\\$&");
       out.push(`  n${ id } [label="${ label }", shape="${ shape }"${ more }];`);
       for (let child of children) {
         out.push(`  n${ id } -> n${ child };`);
