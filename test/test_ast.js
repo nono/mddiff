@@ -26,5 +26,30 @@ describe("AST", function() {
       };
       expect(ast).to.deep.equal(expected);
     });
+
+    it("split lines of code inside a fenced code block", function() {
+      var ast = mddiff.parseAST("```\none\ntwo\nthree\n```");
+      var expected = {
+        t: "Document",
+        start_line: 1,
+        start_column: 1,
+        end_line: 3,
+        children: [ {
+          t: "FencedCode",
+          start_line: 1,
+          start_column: 1,
+          end_line: 4,
+          children: [],
+          string_content: null,
+          info: "",
+          inline_content: [
+            { t: "CodeLine", c: "one" },
+            { t: "CodeLine", c: "two" },
+            { t: "CodeLine", c: "three" },
+          ]
+        } ]
+      };
+      expect(ast).to.deep.equal(expected);
+    });
   });
 });
