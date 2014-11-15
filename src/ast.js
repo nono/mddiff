@@ -1,4 +1,4 @@
-var cmark = require("cmark");
+var cmark = require("commonmark");
 
 exports.parseAST = function(markdown) {
   var transform = function(items) {
