@@ -2,7 +2,6 @@
 "use strict";
 require("babel/register");
 
-var util = require("util");
 var mddiff = require("mddiff");
 var argv = require("yargs")
              .usage("Usage: $0 file1 file2\n\tone of the files can be - for stdin")
@@ -16,7 +15,7 @@ Promise.all(argv._.map(function(filename) {
   var left  = mddiff.parseAST(results[0]);
   var right = mddiff.parseAST(results[1]);
   var out = mddiff.diff(left, right);
-  console.log(util.inspect(out, { depth: null }));
+  console.log(JSON.stringify(out, null, '  '));
 }, function(err) {
   console.error(err);
 });

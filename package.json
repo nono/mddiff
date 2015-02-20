@@ -29,6 +29,7 @@
   "main": "lib/mddiff.js",
   "preferGlobal": true,
   "bin": {
+    "ast2md": "bin/ast2md.js",
     "mdast": "bin/mdast.js",
     "mddiff": "bin/mddiff.js"
   },

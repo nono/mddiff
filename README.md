@@ -1,6 +1,8 @@
 Markdown diff
 =============
 
+**Warning**: this is experimental, not ready for production!
+
 Markdown diff, or mddiff, is a tool to diff two markdown files. It constructs
 an [AST](http://en.wikipedia.org/wiki/Abstract_syntax_tree) for both files and
 then compute the diff on those trees.
@@ -34,6 +36,12 @@ osx $ open file.md.png
 
 mdast --dot --dark -f 'Droid sans' -s 16 file.md | dot -Tsvg -o file.md.svg
 browser file.md.svg
+```
+
+### Rebuild the markdown from an AST
+
+```
+ast2md file.ast > file.md
 ```
 
 Building from source

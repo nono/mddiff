@@ -21,9 +21,9 @@ describe("AST", function() {
       var ast = mddiff.parseAST("```\none\ntwo\nthree\n```");
       var expected = new VNode('Document', {}, [
         new VNode('CodeBlock', {}, [
-          new VText('one'),
-          new VText('two'),
-          new VText('three')
+          new VText('one\n'),
+          new VText('two\n'),
+          new VText('three\n')
         ])
       ]);
       expect(ast).to.deep.equal(expected);

@@ -28,7 +28,7 @@ exports.parseAST = function(markdown) {
     } else if (node.type === 'CodeBlock') {
       let lines = node.literal.split('\n');
       lines.pop();
-      lines = lines.map((line) => new VText(line));
+      lines = lines.map((line) => new VText(line + '\n'));
       const code = new VNode(node.type, {}, lines);
       stack[0].push(code);
     } else {

@@ -2,7 +2,6 @@
 "use strict";
 require("babel/register");
 
-var util = require("util");
 var mddiff = require("mddiff");
 var argv = require("yargs")
              .usage("Usage: $0 [--dot] [--dark] [-f font] [-s fontsize] filename\n\tfilename can be - for stdin")
@@ -26,7 +25,7 @@ var display = function(markdown, filename) {
     if (argv.s) { options.fontsize = argv.s; }
     out = mddiff.exportDot(ast, filename, options);
   } else {
-    out = util.inspect(ast, { depth: null });
+    out = JSON.stringify(ast, null, '  ');
   }
   console.log(out);
 };
