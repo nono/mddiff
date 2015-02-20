@@ -29,7 +29,8 @@
   "main": "lib/mddiff.js",
   "preferGlobal": true,
   "bin": {
-    "mdast": "bin/mdast.js"
+    "mdast": "bin/mdast.js",
+    "mddiff": "bin/mddiff.js"
   },
   "scripts": {
     "test": "gulp test"
