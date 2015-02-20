@@ -1,7 +1,7 @@
 var gulp   = require('gulp');
 var del    = require('del');
 var maps   = require('gulp-sourcemaps');
-var to5    = require('gulp-6to5');
+var babel  = require('gulp-babel');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var mocha  = require('gulp-mocha');
@@ -19,7 +19,7 @@ gulp.task('lint', function () {
 gulp.task('scripts', function() {
   return gulp.src(['src/*.js'])
     .pipe(maps.init())
-    .pipe(to5())
+    .pipe(babel())
     .pipe(concat('mddiff.js'))
     .pipe(maps.write())
     .pipe(gulp.dest('lib'));
