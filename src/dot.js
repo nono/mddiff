@@ -1,11 +1,11 @@
-var shapes = {
+const shapes = {
   document: "note",
   block: "box",
   inline: "oval",
 };
 
 
-var solarizedLight = {
+const solarizedLight = {
   back: "#fdf6e3",
   fill: "#eee8d5",
   font: "#073642",
@@ -14,7 +14,7 @@ var solarizedLight = {
   code: "#268bd2",
 };
 
-var solarizedDark = {
+const solarizedDark = {
   back: "#002b36",
   fill: "#073642",
   font: "#fdf6e3",
@@ -26,7 +26,7 @@ var solarizedDark = {
 exports.palettes = { solarizedLight, solarizedDark };
 
 
-var defaults = {
+const defaults = {
   palette: solarizedLight,
   fontsize: 14,
   fontname: "Inconsolata",
@@ -34,45 +34,39 @@ var defaults = {
 
 
 exports.exportDot = function(ast, filename, options={}) {
-  let pal  = options.palette  || defaults.palette;
-  let size = options.fontsize || defaults.fontsize;
-  let font = options.fontname || defaults.fontname;
+  const pal  = options.palette  || defaults.palette;
+  const size = options.fontsize || defaults.fontsize;
+  const font = options.fontname || defaults.fontname;
 
   let out = [`digraph "${ filename }" {`,
-             `graph [rankdir="LR", bgcolor="${pal.back}"];`,
-             `node [style="filled", fontcolor="${pal.font}", fillcolor="${ pal.fill }", color="${ pal.edge }", fontsize=${ size }, fontname="${ font }"];`,
+             `graph [rankdir="LR", bgcolor="${ pal.back }"];`,
+             `node [style="filled", fontcolor="${ pal.font }", fillcolor="${ pal.fill }", color="${ pal.edge }", fontsize=${ size }, fontname="${ font }"];`,
              `edge [color="${ pal.edge }"];`
             ];
   let n = 0;
 
-  var builder = function(items, type) {
+  var builder = function(items, parent) {
     let ids = [];
     for (let item of items) {
       let id = n++;
       let children = [];
-      if (item.children) {
-        children = children.concat(builder(item.children, "block"));
-      }
-      if (item.inline_content) {
-        children = children.concat(builder(item.inline_content, "inline"));
-      }
-      if (Array.isArray(item.c)) {
-        children = children.concat(builder(item.c, "inline"));
-      }
-      if (Array.isArray(item.label)) {
-        children = children.concat(builder(item.label, "inline"));
-      }
-      let shape = shapes[type];
-      let label = item.t;
+      let shape = shapes.inline;
+      let label = item.tagName;
       let more = "";
-      if (item.t === "Str") {
-        label = `'${ item.c }'`;
-        more = `, fontcolor="${ pal.strg }"`;
-      } else if (item.t === "CodeLine" || item.t === "Code") {
-        label = item.c;
+      if (item.children) {
+        children = builder(item.children, item.tagName);
+        shape = shapes.block;
+      }
+      if (item.tagName === "Document") {
+        shape = shapes.document;
+      } else if (parent === "CodeBlock" || parent === "Code") {
+        label = item.text;
         more = `, fontcolor="${ pal.code }"`;
-      } else if (item.t === "Link") {
-        more = `, href="${ item.destination }"`;
+      } else if (item.type === "VirtualText") {
+        label = `'${ item.text }'`;
+        more = `, fontcolor="${ pal.strg }"`;
+      } else if (item.tagName === "Link" || item.tagName === "Image") {
+        more = `, href="${ item.properties.href }"`;
       }
       label = label.replace(/["\\]/g, "\\$&");
       out.push(`  n${ id } [label="${ label }", shape="${ shape }"${ more }];`);
@@ -84,7 +78,7 @@ exports.exportDot = function(ast, filename, options={}) {
     return ids;
   };
 
-  builder([ast], "document");
+  builder([ast]);
   out.push('}');
   return out.join("\n");
 };

@@ -6,6 +6,8 @@ var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var mocha  = require('gulp-mocha');
 
+require("babel/register");
+
 gulp.task('clean', function() {
   del(['lib/*']);
 });

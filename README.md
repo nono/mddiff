@@ -8,7 +8,7 @@ then compute the diff on those trees.
 Install
 -------
 
-Install nodejs and npmjs, then run `npm install -g mddiff`.
+Install [iojs](https://iojs.org/en/index.html) and run `npm install -g mddiff`.
 
 Usage
 -----
@@ -51,10 +51,11 @@ Credit
 
 * John Gruber, for [Markdown](http://daringfireball.net/projects/markdown/)
 * John MacFarlane and the CommonMark crew, for [CommonMark](http://commonmark.org/)
+* Matt Esch, for [Virtual-DOM](https://github.com/Matt-Esch/virtual-dom)
 
 Copyright
 ---------
 
 The code is licensed as MIT. See the MIT-LICENSE file for the full license.
 
-♡2014 by Bruno Michel. Copying is an act of love. Please copy and share.
+♡2015 by Bruno Michel. Copying is an act of love. Please copy and share.

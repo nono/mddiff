@@ -1,55 +1,44 @@
-require("babel/register");
-
 var expect = require("chai").expect;
 var mddiff = require("mddiff");
+var VNode = require("virtual-dom/vnode/vnode");
+var VText = require("virtual-dom/vnode/vtext");
 
 describe("AST", function() {
   describe("#parseAST()", function() {
     it("constructs an AST from a markdown string", function() {
       var ast = mddiff.parseAST("**bold**");
-      var expected = {
-        t: "Document",
-        start_line: 1,
-        start_column: 1,
-        end_line: 0,
-        children: [ {
-          t: "Paragraph",
-          start_line: 1,
-          start_column: 1,
-          end_line: 0,
-          children: [],
-          inline_content: [ {
-            t: "Strong",
-            c: [ { t: "Str", c: "bold" } ]
-          } ]
-        } ]
-      };
+      var expected = new VNode('Document', {}, [
+        new VNode('Paragraph', {}, [
+          new VNode('Strong',  {}, [
+            new VText('bold')
+          ])
+        ])
+      ]);
       expect(ast).to.deep.equal(expected);
     });
 
-    it("split lines of code inside a fenced code block", function() {
+    it("splits lines of code inside a fenced code block", function() {
       var ast = mddiff.parseAST("```\none\ntwo\nthree\n```");
-      var expected = {
-        t: "Document",
-        start_line: 1,
-        start_column: 1,
-        end_line: 3,
-        children: [ {
-          t: "FencedCode",
-          start_line: 1,
-          start_column: 1,
-          end_line: 4,
-          children: [],
-          string_content: null,
-          info: "",
-          inline_content: [
-            { t: "CodeLine", c: "one" },
-            { t: "CodeLine", c: "two" },
-            { t: "CodeLine", c: "three" },
-          ]
-        } ]
-      };
+      var expected = new VNode('Document', {}, [
+        new VNode('CodeBlock', {}, [
+          new VText('one'),
+          new VText('two'),
+          new VText('three')
+        ])
+      ]);
       expect(ast).to.deep.equal(expected);
     });
+
+    xit("can parse header with their levels");
+    xit("can parse ordered lists");
+    xit("can parse bullet lists");
+    xit("can parse raw html");
+    xit("figures what tight is for lists");
+    xit("keeps start number for lists");
+    xit("keeps delimiter for lists");
+    xit("keeps destination for links and images");
+    xit("keeps title for links and images");
+    xit("keeps the info of fenced code block");
+    xit("splits paragraphs in sentences");
   });
 });

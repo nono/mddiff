@@ -1,30 +1,20 @@
-require("babel/register");
-
 var expect = require("chai").expect;
 var mddiff = require("mddiff");
+var VNode = require("virtual-dom/vnode/vnode");
+var VText = require("virtual-dom/vnode/vtext");
 
 describe("Dot", function() {
   describe("#exportDot()", function() {
     var ast;
 
     beforeEach(function() {
-      ast = {
-        t: "Document",
-        start_line: 1,
-        start_column: 1,
-        end_line: 0,
-        children: [ {
-          t: "Paragraph",
-          start_line: 1,
-          start_column: 1,
-          end_line: 0,
-          children: [],
-          inline_content: [ {
-            t: "Strong",
-            c: [ { t: "Str", c: "bold" } ]
-          } ]
-        } ]
-      };
+      ast = new VNode('Document', {}, [
+        new VNode('Paragraph', {}, [
+          new VNode('Strong',  {}, [
+            new VText('bold')
+          ])
+        ])
+      ]);
     });
 
     it("constructs a dot representation from an AST", function() {
@@ -36,13 +26,13 @@ describe("Dot", function() {
     });
 
     it("escapes double quotes", function() {
-      ast.children[0].inline_content.push({ t: "Str", c: '"foo"' });
+      ast.children[0].children.push(new VText('"foo"'));
       var dot = mddiff.exportDot(ast, "test");
       expect(dot).to.contain('label="\'\\"foo\\"\'"');
     });
 
     it("escapes antislash", function() {
-      ast.children[0].inline_content.push({ t: "Str", c: "foo\\" });
+      ast.children[0].children.push(new VText('foo\\'));
       var dot = mddiff.exportDot(ast, "test");
       expect(dot).to.contain('label="\'foo\\\\\'"');
     });
